@@ -57,15 +57,17 @@ export default function RegionNavs({ region }) {
           APAC
         </NavLink>
       </div>
-      <div className="bg-white flex items-center w-1/2 justify-between p-2 rounded-sm">
-        <h1>wwos-gsoc-archive@amazon.com</h1>
-        <button
-          onClick={handleCopy}
-          className="bg-[#146EB4] text-white px-2 rounded-sm cursor-pointer"
-        >
-          Copy
-        </button>
-      </div>
+      {region && (
+        <div className="bg-white flex items-center w-1/2 justify-between p-2 rounded-sm">
+          <h1>wwos-gsoc-archive@amazon.com</h1>
+          <button
+            onClick={handleCopy}
+            className="bg-[#146EB4] text-white px-2 rounded-sm cursor-pointer"
+          >
+            Copy
+          </button>
+        </div>
+      )}
     </div>
   );
 }
