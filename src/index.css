@@ -1,0 +1,65 @@
+@font-face {
+  font-family: "regular";
+  src: url("./assets/fonts/AmazonEmber_Rg.ttf");
+}
+@font-face {
+  font-family: "light";
+  src: url("./assets/fonts/AmazonEmber_Lt.ttf");
+}
+@font-face {
+  font-family: "medium";
+  src: url("./assets/fonts/Amazon-Ember-Medium.ttf");
+}
+@font-face {
+  font-family: "bold";
+  src: url("./assets/fonts/AmazonEmberDisplay_Bd.ttf");
+}
+@font-face {
+  font-family: "italian";
+  src: url("./assets/fonts/AmazonEmber_ThIt.ttf");
+}
+
+@import "tailwindcss";
+
+@theme {
+  --color-bg1: #0f1b2a;
+  --color-bg2: #232f3e;
+  --color-bg3: #5f6b7a;
+  --color-bg4: #fccf6e;
+  --color-bg5: #f2f2f2;
+  --color-bg5: #f2f2f2;
+
+  --color-f1: #f5f5f5;
+  --color-f2: #dbdbdb;
+  --color-f3: #ffc400;
+
+  --color-err: #e60c13;
+
+  --font-f1: regular, "sans-serif";
+  --font-f2: light, "sans-serif";
+  --font-f3: medium, "sans-serif";
+  --font-f4: bold, "sans-serif";
+  --font-f5: italian, "sans-serif";
+
+  --animate-updateBtn: updateBtn 5s ease-in-out infinite;
+}
+
+@keyframes updateBtn {
+  0%,
+  100% {
+    background-color: #0f1b2a;
+    color: #f2f2f2;
+  }
+  25% {
+    background-color: #fccf6e;
+    color: #0f1b2a;
+  }
+  50% {
+    background-color: #0f1b2a;
+    color: #f2f2f2;
+  }
+  75% {
+    background-color: #fccf6e;
+    color: #0f1b2a;
+  }
+}
