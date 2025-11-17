@@ -10,33 +10,32 @@ export default function NA() {
 
   //* ===========================> SMILEY CONTACTS
   const smileyContacts = [
-    "AMER INTERNAL COMMS SUPPORT GROUP",
-    "AMER ERC SUPPORT GROUP",
-    "NETWORK OPERATIONS CENTER SUPPORT GROUP",
-    "GSOC MGMT SUPPORT GROUP",
-    "RISK GLOBAL LAST MILE",
-    "GLOBAL OTR SAFETY SUPPORT GROUP",
-    "NORTH AMERICA ROC SUPPORT GROUP",
-    "NORTH AMERICA OPS PR",
+    "AMER INTERNAL COMMS SUPPORT GROUP,",
+    "NA ERC SUPPORT GROUP,",
+    "AMER ERC SUPPORT GROUP,",
+    "NETWORK OPERATIONS CENTER SUPPORT GROUP,",
+    "GSOC MGMT SUPPORT GROUP,",
+    "RISK GLOBAL LAST MILE,",
+    "GLOBAL OTR SAFETY SUPPORT GROUP,",
+    "NORTH AMERICA ROC SUPPORT GROUP,",
+    "NORTH AMERICA OPS PR,",
   ];
 
-  //* =========================================================> DROP DOWN
-  //* ===========================> SET COUNTRY
+  const [language, setLanguage] = useState("Eng");
   const [country, setCountry] = useState("US");
   const [siteCode, setSiteCode] = useState("");
   const [siteType, setSiteType] = useState("AMZL");
   const [sev, setSev] = useState("5");
-  const [ic, setIC] = useState("");
   const [driverInvolved, setDriverInvolved] = useState("DSP");
-  const [reportedBy, setReportedBy] = useState("reportedByDP");
+  const [reportedBy, setReportedBy] = useState("DA");
 
-  //* =========================================================> RADIO
-  const [cxImpact, setCxImpact] = useState("no");
-  const [detrimental, setDetrimental] = useState("no");
-  const [hazardous, setHazardous] = useState("no");
-  const [thermal, setThermal] = useState("no");
-  const [dotRegulated, setDotRegulated] = useState("no");
-  const [discrimination, setDiscrimination] = useState("no");
+  const [cxImpact, setCxImpact] = useState("");
+  const [detrimental, setDetrimental] = useState("");
+  const [hazardous, setHazardous] = useState("");
+  const [thermal, setThermal] = useState("");
+  const [dotRegulated, setDotRegulated] = useState("");
+  const [discrimination, setDiscrimination] = useState("");
+  const [vehicleMalFunction, setVehicleMalFunction] = useState("");
 
   const [error, setError] = useState("");
   const [contacts, setContacts] = useState([]);
@@ -44,77 +43,90 @@ export default function NA() {
   //* GENERATE CONTACTS
   const generateContacts = () => {
     contacts.length = 0;
-    const newContacts = [...smileyContacts];
+    const newCon = [...smileyContacts];
 
     //* =========================> SELECT
     //* SITE CODE ERROR
-    if (!siteCode.trim()) {
-      setError("Site code needed !");
-      setTimeout(() => setError(""), 3000);
-      return;
-    }
-    newContacts.push(`${siteCode} IMT`);
+    if (!siteCode.trim()) setError("Site code needed !");
+    else {
+      //* COUNTRY SITE-TYPE SEV#
+      newCon.push(`${country} ${siteType} SEV${sev === "5" ? "4" : sev},`);
 
-    //* IC CODE ERROR
-    if (!ic.trim()) {
-      setError("Bcc Individuals needed !");
-      setTimeout(() => setError(""), 3000);
-      return;
-    }
-    newContacts.push(`${ic}`);
+      //* NA SEV#
+      newCon.push(`NA SEV${sev},`);
 
-    newContacts.push(`NA SEV${sev}`);
-    newContacts.push(`${country} ${siteType} SEV${sev === "5" ? "4" : sev}`);
-    newContacts.push(
-      `${country} ${driverInvolved} SEV${sev === "5" ? "4" : sev}`,
-    );
+      //* DRIVER INVOLVED
+      newCon.push(
+        `${country} ${driverInvolved} SEV${sev === "5" ? "4" : sev},`,
+      );
 
-    if (country === "US" && reportedBy === "reportedByDP") {
-      newContacts.push("sds-gsoc-flex-incident@amazon.com");
-    } else if (country === "CA" && reportedBy === "reportedByDP") {
-      newContacts.push("sds-gsoc-flex-incident@amazon.ca");
-    } else if (country === "US" && reportedBy === "reportedByDA") {
-      newContacts.push("sds-gsoc-driver-potentialharm@amazon.com");
-    } else if (country === "CA" && reportedBy === "reportedByDA") {
-      newContacts.push("sds-gsoc-driver-potentialharm@amazon.ca");
-    } else if (country === "US" && reportedBy === "reportedByCX/CM") {
-      newContacts.push("sds-gsoc-cx-incident@amazon.com");
-    } else if (country === "CA" && reportedBy === "reportedByCX/CM") {
-      newContacts.push("sds-gsoc-cx-incident@amazon.ca");
-    } else if (country === "US" && reportedBy === "reportedByHubDA") {
-      newContacts.push("sds-gsoc-hub-incident@amazon.com");
-    }
+      //* REPORTED BY
+      if (country === "US") {
+        if (reportedBy === "DP") {
+          newCon.push("sds-gsoc-flex-incident@amazon.com,");
+          if (language === "Sp")
+            newCon.push("sds-gsoc-flex-incident-spanish@amazon.com,");
+        } else if (reportedBy === "CXCMKnownDA") {
+          newCon.push("sds-gsoc-driver-potentialharm@amazon.com,");
+          if (language === "Sp")
+            newCon.push("sds-gsoc-driver-potentialharm-spanish@amazon.com,");
+        } else if (reportedBy === "CXCM") {
+          newCon.push("sds-gsoc-cx-incident@amazon.com,");
+          if (language === "Sp")
+            newCon.push("sds-gsoc-cx-incident@amazon.com,");
+        } else if (reportedBy === "HubDA") {
+          newCon.push("sds-gsoc-hub-incident@amazon.com,");
+        }
+      } else if (country === "CA") {
+        if (reportedBy === "DP") {
+          newCon.push("sds-gsoc-flex-incident@amazon.ca,");
+          if (language === "Sp")
+            newCon.push("sds-gsoc-flex-incident-spanish@amazon.com,");
+        } else if (reportedBy === "CXCMKnownDA") {
+          newCon.push("sds-gsoc-driver-potentialharm@amazon.ca,");
+          if (language === "Sp")
+            newCon.push("sds-gsoc-driver-potentialharm-spanish@amazon.com,");
+        } else if (reportedBy === "CXCM") {
+          newCon.push("sds-gsoc-cx-incident@amazon.ca,");
+          if (language === "Sp")
+            newCon.push("sds-gsoc-cx-incident@amazon.com,");
+        }
+      }
 
-    //* =========================> RADIO
-    if (cxImpact === "yes") {
-      newContacts.push(`${country} cx support group`);
-      newContacts.push(`cs-gcc-all@amazon.com`);
-    }
-    if (detrimental === "yes") newContacts.push(`AMER LAST MILE RISK`);
-    if (hazardous === "yes") {
-      newContacts.push(`NA HAZMAT SUPPORT GROUP`);
-      newContacts.push(`DANGEROUS GOODS SUPPORT GROUP`);
-    }
-    if (sev === "1" || sev === "2") {
-      newContacts.push(`AMER LAST MILE RISK`);
-      newContacts.push(`AMER SEV${sev}`);
-      newContacts.push(`AMER RESILIENCE`);
-    }
-    if (thermal === "yes" && sev === "5") {
-      newContacts.push(`AMER LAST MILE VEHICLE THERMAL EVENT LOW SEVERITY`);
-    } else if (thermal === "yes") {
-      newContacts.push(`AMER LAST MILE VEHICLE THERMAL EVENT`);
-    }
+      //* CX FACING IMPACT
+      if (cxImpact) newCon.push(cxImpact);
 
-    if (dotRegulated === "yes") {
-      newContacts.push(`floftus@arcclaims.com `);
-      newContacts.push(`ecarroll@arcclaims.com`);
+      //* DETRIMENTAL
+      if (detrimental) newCon.push(detrimental);
+
+      //* HAZARDOUS
+      if (hazardous) newCon.push(hazardous);
+
+      //* THERMAL
+      if (thermal && sev === "5")
+        newCon.push("NA LAST MILE VEHICLE THERMAL EVENT LOW SEVERITY,");
+      else newCon.push(thermal);
+
+      //* DOT  REGULATED
+      if (dotRegulated) newCon.push(dotRegulated);
+
+      //* DISCRIMINATION
+      if (discrimination) newCon.push(discrimination);
+
+      //* VEHICLE MALFUNCTION
+      if (vehicleMalFunction && country === "US")
+        newCon.push(vehicleMalFunction);
+      else if (vehicleMalFunction && country === "CA")
+        newCon.push("CA AMZL FLEET SUPPORT GROUP,");
+
+      if (sev === "1" || sev === "2") {
+        newCon.push("AMER LAST MILE RISK,");
+        newCon.push(`AMER SEV${sev},`);
+        newCon.push("NA RESILIENCE,");
+      }
+
+      setContacts([...newCon]);
     }
-
-    if (discrimination === "yes")
-      newContacts.push("DISCRIMINATION SUPPORT GROUP");
-
-    setContacts([...newContacts]);
   };
 
   //* COPY CONTACTS
@@ -125,9 +137,12 @@ export default function NA() {
 
   return (
     <div className="min-h-screen bg-[#146EB4] to-blue-200 flex items-center justify-center p-8 font-f1">
-      <div className="fixed top-0 bg-[#146EB4] w-3/4 py-4 px-2 rounded-sm">
+      {/* //* NAVBAR */}
+      <nav className="fixed top-0 bg-[#146EB4] w-3/4 py-4 px-2 rounded-sm">
         <RegionNavs region={region} />
-      </div>
+      </nav>
+
+      {/* //* SMILEY MODAL */}
       {showSmile && (
         <div className="fixed top-0 left-0 bg-black/90 min-h-screen w-full flex items-center justify-center">
           {/* //* SMILEY CONTACTS */}
@@ -152,12 +167,29 @@ export default function NA() {
         </div>
       )}
 
+      {/* //* FORM */}
       <div className="bg-white w-full sm:max-w-3xl mt-24 mx-auto py-4 px-8 rounded-sm shadow-xl space-y-2">
         <h1 className="text-lg text-center font-extrabold text-gray-800 flex justify-between">
           NA <span className="text-lg font-bold">(US / CA)</span>
         </h1>
 
-        {/* //* =====================> SELECT */}
+        {/* //* SELECT LANGUAGE */}
+        <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center justify-center">
+          <h1 className="text-lg font-medium w-1/2 text-center">Language:</h1>
+          <select
+            value={language}
+            onChange={(event) => setLanguage(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center uppercase"
+          >
+            <option className="font-medium" value="Eng">
+              English
+            </option>
+            <option className="font-medium" value="Sp">
+              Spanish
+            </option>
+          </select>
+        </div>
+
         {/* //* SELECT COUNTRY */}
         <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center justify-center">
           <h1 className="text-lg font-medium w-1/2 text-center">Country:</h1>
@@ -251,20 +283,6 @@ export default function NA() {
           </select>
         </div>
 
-        {/* //* Bcc Individuals */}
-        <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center">
-          <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
-            Bcc Individuals:
-          </h2>
-          <input
-            type="text"
-            value={ic}
-            onChange={(e) => setIC(e.target.value)}
-            className="w-1/2 py-1 px-2 border rounded-sm text-lg placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:border-transparent text-center"
-            placeholder="harisss"
-          />
-        </div>
-
         {/* //* Driver Involved */}
         <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center justify-center">
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
@@ -300,66 +318,50 @@ export default function NA() {
             Reported By:
           </h2>
           <select
-            value={driverInvolved}
+            value={reportedBy}
             onChange={(event) => setReportedBy(event.target.value)}
             className="border p-2 rounded-sm font-medium w-1/2 text-center"
           >
-            <option className="font-medium" value="DSP">
+            <option className="font-medium" value="DA">
               DA (CX/CM is Unknown)
             </option>
-            <option className="font-medium" value="DSPWITHCXCM">
-              DA (CX/CM is Known)
-            </option>
-            <option className="font-medium" value="FLEX">
+            <option className="font-medium" value="DP">
               Flex DP
             </option>
-            <option className="font-medium" value="FLEX">
+            <option className="font-medium" value="CXCMKnownDA">
+              DA (CX/CM is Known)
+            </option>
+            <option className="font-medium" value="CXCM">
               CX/CM
             </option>
             {country === "US" && (
-              <option className="font-medium" value="HUB DA">
+              <option className="font-medium" value="HubDA">
                 Hub DA
               </option>
             )}
           </select>
         </div>
 
-        {/* //* =====================> RADIO */}
         {/* //* CX FACING IMPACT */}
         <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center justify-center">
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
             Customer Facing Impact:
           </h2>
-          <div className="w-1/2 flex items-center justify-center gap-10">
-            <label
-              htmlFor="cxImpactTrue"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="cxImpactTrue"
-                name="cxImpact"
-                onChange={(event) => setCxImpact(event.target.value)}
-                checked={cxImpact === "yes"}
-                value="yes"
-              />{" "}
-              Yes
-            </label>
-            <label
-              htmlFor="cxImpactFalse"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="cxImpactFalse"
-                name="cxImpact"
-                onChange={(event) => setCxImpact(event.target.value)}
-                checked={cxImpact === "no"}
-                value="no"
-              />{" "}
+          <select
+            value={cxImpact}
+            onChange={(event) => setCxImpact(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
               No
-            </label>
-          </div>
+            </option>
+            <option
+              className="font-medium"
+              value={`${country} cx support group, cs-gcc-all@amazon.com,`}
+            >
+              Yes
+            </option>
+          </select>
         </div>
 
         {/* //* Detrimental Behavior */}
@@ -367,36 +369,18 @@ export default function NA() {
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
             Detrimental Behavior:
           </h2>
-          <div className="w-1/2 flex items-center justify-center gap-10">
-            <label
-              htmlFor="detrimentalTrue"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="detrimentalTrue"
-                name="detrimental"
-                onChange={(event) => setDetrimental(event.target.value)}
-                checked={detrimental === "yes"}
-                value="yes"
-              />{" "}
-              Yes
-            </label>
-            <label
-              htmlFor="detrimentalFalse"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="detrimentalFalse"
-                name="detrimental"
-                onChange={(event) => setDetrimental(event.target.value)}
-                checked={detrimental === "no"}
-                value="no"
-              />{" "}
+          <select
+            value={detrimental}
+            onChange={(event) => setDetrimental(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
               No
-            </label>
-          </div>
+            </option>
+            <option className="font-medium" value="AMER LAST MILE RISK,">
+              Yes
+            </option>
+          </select>
         </div>
 
         {/* //* Hazardous Material */}
@@ -404,36 +388,21 @@ export default function NA() {
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
             Hazardous Material:
           </h2>
-          <div className="w-1/2 flex items-center justify-center gap-10">
-            <label
-              htmlFor="hazardousTrue"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="hazardousTrue"
-                name="hazardous"
-                onChange={(event) => setHazardous(event.target.value)}
-                checked={hazardous === "yes"}
-                value="yes"
-              />{" "}
-              Yes
-            </label>
-            <label
-              htmlFor="hazardousFalse"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="hazardousFalse"
-                name="hazardous"
-                onChange={(event) => setHazardous(event.target.value)}
-                checked={hazardous === "no"}
-                value="no"
-              />{" "}
+          <select
+            value={hazardous}
+            onChange={(event) => setHazardous(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
               No
-            </label>
-          </div>
+            </option>
+            <option
+              className="font-medium"
+              value="NA HAZMAT SUPPORT GROUP,DANGEROUS GOODS SUPPORT GROUP,"
+            >
+              Yes
+            </option>
+          </select>
         </div>
 
         {/* //* Delivery Van Vehicle Thermal Event  */}
@@ -441,37 +410,21 @@ export default function NA() {
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
             Vehicle Thermal Event :
           </h2>
-
-          <div className="w-1/2 flex items-center justify-center gap-10">
-            <label
-              htmlFor="thermalTrue"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="thermalTrue"
-                name="thermal"
-                onChange={(event) => setThermal(event.target.value)}
-                checked={thermal === "yes"}
-                value="yes"
-              />{" "}
-              Yes
-            </label>
-            <label
-              htmlFor="thermalFalse"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="thermalFalse"
-                name="thermal"
-                onChange={(event) => setThermal(event.target.value)}
-                checked={thermal === "no"}
-                value="no"
-              />{" "}
+          <select
+            value={thermal}
+            onChange={(event) => setThermal(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
               No
-            </label>
-          </div>
+            </option>
+            <option
+              className="font-medium"
+              value="NA LAST MILE VEHICLE THERMAL EVENT,"
+            >
+              Yes
+            </option>
+          </select>
         </div>
 
         {/* //* DOT REGULATED VEHICLE */}
@@ -479,37 +432,21 @@ export default function NA() {
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
             DOT Regulated Vehicle:
           </h2>
-
-          <div className="w-1/2 flex items-center justify-center gap-10">
-            <label
-              htmlFor="dotRegulatedTrue"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="dotRegulatedTrue"
-                name="dotRegulated"
-                onChange={(event) => setDotRegulated(event.target.value)}
-                checked={dotRegulated === "yes"}
-                value="yes"
-              />{" "}
-              Yes
-            </label>
-            <label
-              htmlFor="dotRegulatedFalse"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="dotRegulatedFalse"
-                name="dotRegulated"
-                onChange={(event) => setDotRegulated(event.target.value)}
-                checked={dotRegulated === "no"}
-                value="no"
-              />{" "}
+          <select
+            value={dotRegulated}
+            onChange={(event) => setDotRegulated(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
               No
-            </label>
-          </div>
+            </option>
+            <option
+              className="font-medium"
+              value="floftus@arcclaims.com, ecarroll@arcclaims.com,"
+            >
+              Yes
+            </option>
+          </select>
         </div>
 
         {/* //* DISCRIMINATION */}
@@ -517,37 +454,43 @@ export default function NA() {
           <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
             Discrimination (hate-bias):
           </h2>
-
-          <div className="w-1/2 flex items-center justify-center gap-10">
-            <label
-              htmlFor="discriminatedTrue"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="discriminatedTrue"
-                name="discrimination"
-                onChange={(event) => setDiscrimination(event.target.value)}
-                checked={discrimination === "yes"}
-                value="yes"
-              />{" "}
-              Yes
-            </label>
-            <label
-              htmlFor="discriminationFalse"
-              className="cursor-pointer flex items-center gap-2"
-            >
-              <input
-                type="radio"
-                id="discriminationFalse"
-                name="discrimination"
-                onChange={(event) => setDiscrimination(event.target.value)}
-                checked={discrimination === "no"}
-                value="no"
-              />{" "}
+          <select
+            value={discrimination}
+            onChange={(event) => setDiscrimination(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
               No
-            </label>
-          </div>
+            </option>
+            <option
+              className="font-medium"
+              value="DISCRIMINATION SUPPORT GROUP,"
+            >
+              Yes
+            </option>
+          </select>
+        </div>
+
+        {/* //* VEHICLE MALFUNCTION */}
+        <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center justify-center">
+          <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
+            Vehicle Malfunction (Amazon-branded):
+          </h2>
+          <select
+            value={vehicleMalFunction}
+            onChange={(event) => setVehicleMalFunction(event.target.value)}
+            className="border p-2 rounded-sm font-medium w-1/2 text-center"
+          >
+            <option className="font-medium" value="">
+              No
+            </option>
+            <option
+              className="font-medium"
+              value="US AMZL FLEET SUPPORT GROUP,"
+            >
+              Yes
+            </option>
+          </select>
         </div>
 
         {/* //* ERROR */}
@@ -575,11 +518,13 @@ export default function NA() {
         </div>
 
         {contacts.length > 0 && (
-          <div className="space-y-4 flex flex-col gap-1">
+          <div className="space-y-2 flex flex-col">
             {/* //* CONTACTS DISPLAY */}
-            <div className="bg-green-200 p-2 w-[95%] mx-auto rounded-sm shadow-2xl">
+            <div className="bg-green-200 p-2 w-[95%] mx-auto rounded-sm shadow-2xl flex flex-wrap justify-center gap-1">
               {contacts.map((c, i) => (
-                <span key={i}>{c}, </span>
+                <span className="text-[12px]" key={i}>
+                  {c}
+                </span>
               ))}
             </div>
             {/* //* COPY CONTACTS */}

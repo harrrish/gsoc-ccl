@@ -10,25 +10,23 @@ export default function APAC() {
 
   //* ===========================> SMILEY CONTACTS
   const smileyContacts = [
-    "AMER INTERNAL COMMS SUPPORT GROUP",
-    "AMER ERC SUPPORT GROUP",
+    "APAC ERC SUPPORT GROUP",
     "NETWORK OPERATIONS CENTER SUPPORT GROUP",
     "GSOC MGMT SUPPORT GROUP",
     "RISK GLOBAL LAST MILE",
-    "GLOBAL OTR SAFETY SUPPORT GROUP",
-    "NORTH AMERICA ROC SUPPORT GROUP",
-    "NORTH AMERICA OPS PR",
+    "APAC AMET INTERNAL COMMS SUPPORT GROUP",
   ];
 
   //* =========================================================> DROP DOWN
   //* ===========================> SET COUNTRY
-  const [country, setCountry] = useState("US");
+  const [country, setCountry] = useState("AU");
   const [siteCode, setSiteCode] = useState("");
   const [siteType, setSiteType] = useState("AMZL");
   const [sev, setSev] = useState("5");
   const [ic, setIC] = useState("");
   const [driverInvolved, setDriverInvolved] = useState("DSP");
   const [reportedBy, setReportedBy] = useState("reportedByDP");
+  const [siteRegion, setSiteRegion] = useState("");
 
   //* =========================================================> RADIO
   const [cxImpact, setCxImpact] = useState("no");
@@ -44,78 +42,76 @@ export default function APAC() {
   //* GENERATE CONTACTS
   const generateContacts = () => {
     contacts.length = 0;
-    const newContacts = [...smileyContacts];
+    const newCon = [...smileyContacts];
 
     //* =========================> SELECT
     //* SITE CODE ERROR
     if (!siteCode.trim()) {
       setError("Site code needed !");
-      setTimeout(() => setError(""), 3000);
+
       return;
     }
-    newContacts.push(`${siteCode} IMT`);
+    newCon.push(`${siteCode} IMT`);
 
     //* IC CODE ERROR
     if (!ic.trim()) {
       setError("Bcc Individuals needed !");
-      setTimeout(() => setError(""), 3000);
+
       return;
     }
-    newContacts.push(`${ic}`);
+    newCon.push(`${ic}`);
 
-    newContacts.push(`NA SEV${sev}`);
-    newContacts.push(`${country} ${siteType} SEV${sev === "5" ? "4" : sev}`);
-    newContacts.push(
-      `${country} ${driverInvolved} SEV${sev === "5" ? "4" : sev}`,
-    );
+    newCon.push(`${country} PR Transportation`);
+
+    newCon.push(`${country} ${siteType} SEV${sev === "5" ? "4" : sev}`);
+    newCon.push(`${country} ${driverInvolved} SEV${sev === "5" ? "4" : sev}`);
 
     if (country === "US" && reportedBy === "reportedByDP") {
-      newContacts.push("sds-gsoc-flex-incident@amazon.com");
+      newCon.push("sds-gsoc-flex-incident@amazon.com");
     } else if (country === "CA" && reportedBy === "reportedByDP") {
-      newContacts.push("sds-gsoc-flex-incident@amazon.ca");
+      newCon.push("sds-gsoc-flex-incident@amazon.ca");
     } else if (country === "US" && reportedBy === "reportedByDA") {
-      newContacts.push("sds-gsoc-driver-potentialharm@amazon.com");
+      newCon.push("sds-gsoc-driver-potentialharm@amazon.com");
     } else if (country === "CA" && reportedBy === "reportedByDA") {
-      newContacts.push("sds-gsoc-driver-potentialharm@amazon.ca");
+      newCon.push("sds-gsoc-driver-potentialharm@amazon.ca");
     } else if (country === "US" && reportedBy === "reportedByCX/CM") {
-      newContacts.push("sds-gsoc-cx-incident@amazon.com");
+      newCon.push("sds-gsoc-cx-incident@amazon.com");
     } else if (country === "CA" && reportedBy === "reportedByCX/CM") {
-      newContacts.push("sds-gsoc-cx-incident@amazon.ca");
+      newCon.push("sds-gsoc-cx-incident@amazon.ca");
     } else if (country === "US" && reportedBy === "reportedByHubDA") {
-      newContacts.push("sds-gsoc-hub-incident@amazon.com");
+      newCon.push("sds-gsoc-hub-incident@amazon.com");
     }
 
     //* =========================> RADIO
 
     if (cxImpact === "yes") {
-      newContacts.push(`${country} cx support group`);
-      newContacts.push(`cs-gcc-all@amazon.com`);
+      newCon.push(`${country} cx support group`);
+      newCon.push(`cs-gcc-all@amazon.com`);
     }
-    if (detrimental === "yes") newContacts.push(`AMER LAST MILE RISK`);
+    if (detrimental === "yes") newCon.push(`AMER LAST MILE RISK`);
     if (hazardous === "yes") {
-      newContacts.push(`NA HAZMAT SUPPORT GROUP`);
-      newContacts.push(`DANGEROUS GOODS SUPPORT GROUP`);
+      newCon.push(`NA HAZMAT SUPPORT GROUP`);
+      newCon.push(`DANGEROUS GOODS SUPPORT GROUP`);
     }
     if (sev === "1" || sev === "2") {
-      newContacts.push(`AMER LAST MILE RISK`);
-      newContacts.push(`AMER SEV${sev}`);
-      newContacts.push(`AMER RESILIENCE`);
+      newCon.push(`AMER LAST MILE RISK`);
+      newCon.push(`AMER SEV${sev}`);
+      newCon.push(`AMER RESILIENCE`);
     }
     if (thermal === "yes" && sev === "5") {
-      newContacts.push(`AMER LAST MILE VEHICLE THERMAL EVENT LOW SEVERITY`);
+      newCon.push(`AMER LAST MILE VEHICLE THERMAL EVENT LOW SEVERITY`);
     } else if (thermal === "yes") {
-      newContacts.push(`AMER LAST MILE VEHICLE THERMAL EVENT`);
+      newCon.push(`AMER LAST MILE VEHICLE THERMAL EVENT`);
     }
 
     if (dotRegulated === "yes") {
-      newContacts.push(`floftus@arcclaims.com `);
-      newContacts.push(`ecarroll@arcclaims.com`);
+      newCon.push(`floftus@arcclaims.com `);
+      newCon.push(`ecarroll@arcclaims.com`);
     }
 
-    if (discrimination === "yes")
-      newContacts.push("DISCRIMINATION SUPPORT GROUP");
+    if (discrimination === "yes") newCon.push("DISCRIMINATION SUPPORT GROUP");
 
-    setContacts([...newContacts]);
+    setContacts([...newCon]);
   };
 
   //* COPY CONTACTS
@@ -159,7 +155,7 @@ export default function APAC() {
 
       <div className="bg-white w-full sm:max-w-3xl mt-24 mx-auto py-4 px-8 rounded-sm shadow-xl space-y-2">
         <h1 className="text-lg text-center font-extrabold text-gray-800 flex justify-between">
-          NA <span className="text-lg font-bold">(US / CA)</span>
+          APAC <span className="text-lg font-bold">(AU / JP / SG / IN)</span>
         </h1>
 
         {/* //* SELECT COUNTRY */}
@@ -170,11 +166,17 @@ export default function APAC() {
             onChange={(event) => setCountry(event.target.value)}
             className="border p-2 rounded-sm font-medium w-1/2 text-center"
           >
-            <option className="font-medium" value="US">
-              US
+            <option className="font-medium" value="AU">
+              AU
             </option>
-            <option className="font-medium" value="CA">
-              CA
+            <option className="font-medium" value="JP">
+              JP
+            </option>
+            <option className="font-medium" value="SG">
+              SG
+            </option>
+            <option className="font-medium" value="IN">
+              IN
             </option>
           </select>
         </div>
@@ -224,8 +226,29 @@ export default function APAC() {
             <option className="font-medium" value="Sort Center SC">
               Sort Center SC
             </option>
+            {country === "JP" && (
+              <option className="font-medium" value="AMXL">
+                AMXL
+              </option>
+            )}
           </select>
         </div>
+
+        {/* //* SITE REGION */}
+        {country === "IN" && siteType === "AMZL" && (
+          <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center">
+            <h2 className="text-lg font-medium text-gray-800 mb-1 w-1/2 text-center">
+              Site code:
+            </h2>
+            <input
+              type="text"
+              value={siteRegion}
+              onChange={(e) => setSiteRegion(e.target.value)}
+              className="w-1/2 py-1 px-2 border rounded-sm text-lg placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:border-transparent text-center uppercase"
+              placeholder="NORTH"
+            />
+          </div>
+        )}
 
         {/* //* SELECT SEV */}
         <div className="bg-gray-50 px-4 py-1 rounded-sm shadow-sm border border-gray-200 flex items-center justify-center">

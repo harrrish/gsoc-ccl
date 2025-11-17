@@ -44,78 +44,75 @@ export default function LATAM() {
   //* GENERATE CONTACTS
   const generateContacts = () => {
     contacts.length = 0;
-    const newContacts = [...smileyContacts];
+    const newCon = [...smileyContacts];
 
     //* =========================> SELECT
     //* SITE CODE ERROR
     if (!siteCode.trim()) {
       setError("Site code needed !");
-      setTimeout(() => setError(""), 3000);
+
       return;
     }
-    newContacts.push(`${siteCode} IMT`);
+    newCon.push(`${siteCode} IMT`);
 
     //* IC CODE ERROR
     if (!ic.trim()) {
       setError("Bcc Individuals needed !");
-      setTimeout(() => setError(""), 3000);
+
       return;
     }
-    newContacts.push(`${ic}`);
+    newCon.push(`${ic}`);
 
-    newContacts.push(`LATAM SEV${sev}`);
-    newContacts.push(`${country} ${siteType} SEV${sev === "5" ? "4" : sev}`);
-    newContacts.push(
-      `${country} ${driverInvolved} SEV${sev === "5" ? "4" : sev}`,
-    );
+    newCon.push(`LATAM SEV${sev}`);
+    newCon.push(`${country} ${siteType} SEV${sev === "5" ? "4" : sev}`);
+    newCon.push(`${country} ${driverInvolved} SEV${sev === "5" ? "4" : sev}`);
 
     if (country === "US" && reportedBy === "reportedByDP") {
-      newContacts.push("sds-gsoc-flex-incident@amazon.com");
+      newCon.push("sds-gsoc-flex-incident@amazon.com");
     } else if (country === "CA" && reportedBy === "reportedByDP") {
-      newContacts.push("sds-gsoc-flex-incident@amazon.ca");
+      newCon.push("sds-gsoc-flex-incident@amazon.ca");
     } else if (country === "US" && reportedBy === "reportedByDA") {
-      newContacts.push("sds-gsoc-driver-potentialharm@amazon.com");
+      newCon.push("sds-gsoc-driver-potentialharm@amazon.com");
     } else if (country === "CA" && reportedBy === "reportedByDA") {
-      newContacts.push("sds-gsoc-driver-potentialharm@amazon.ca");
+      newCon.push("sds-gsoc-driver-potentialharm@amazon.ca");
     } else if (country === "US" && reportedBy === "reportedByCX/CM") {
-      newContacts.push("sds-gsoc-cx-incident@amazon.com");
+      newCon.push("sds-gsoc-cx-incident@amazon.com");
     } else if (country === "CA" && reportedBy === "reportedByCX/CM") {
-      newContacts.push("sds-gsoc-cx-incident@amazon.ca");
+      newCon.push("sds-gsoc-cx-incident@amazon.ca");
     } else if (country === "US" && reportedBy === "reportedByHubDA") {
-      newContacts.push("sds-gsoc-hub-incident@amazon.com");
+      newCon.push("sds-gsoc-hub-incident@amazon.com");
     }
 
     //* =========================> RADIO
 
     if (cxImpact === "yes") {
-      newContacts.push(`${country} cx support group`);
-      newContacts.push(`cs-gcc-all@amazon.com`);
+      newCon.push(`${country} cx support group`);
+      newCon.push(`cs-gcc-all@amazon.com`);
     }
-    if (detrimental === "yes") newContacts.push(`AMER LAST MILE RISK`);
+    if (detrimental === "yes") newCon.push(`AMER LAST MILE RISK`);
     if (hazardous === "yes") {
-      newContacts.push(`NA HAZMAT SUPPORT GROUP`);
-      newContacts.push(`DANGEROUS GOODS SUPPORT GROUP`);
+      newCon.push(`NA HAZMAT SUPPORT GROUP`);
+      newCon.push(`DANGEROUS GOODS SUPPORT GROUP`);
     }
     if (sev === "1" || sev === "2") {
-      newContacts.push(`AMER LAST MILE RISK`);
-      newContacts.push(`AMER SEV${sev}`);
-      newContacts.push(`AMER RESILIENCE`);
+      newCon.push(`AMER LAST MILE RISK`);
+      newCon.push(`AMER SEV${sev}`);
+      newCon.push(`AMER RESILIENCE`);
     }
     if (thermal === "yes" && sev === "5") {
-      newContacts.push(`AMER LAST MILE VEHICLE THERMAL EVENT LOW SEVERITY`);
+      newCon.push(`AMER LAST MILE VEHICLE THERMAL EVENT LOW SEVERITY`);
     } else if (thermal === "yes") {
-      newContacts.push(`AMER LAST MILE VEHICLE THERMAL EVENT`);
+      newCon.push(`AMER LAST MILE VEHICLE THERMAL EVENT`);
     }
 
     if (dotRegulated === "yes") {
-      newContacts.push(`floftus@arcclaims.com `);
-      newContacts.push(`ecarroll@arcclaims.com`);
+      newCon.push(`floftus@arcclaims.com `);
+      newCon.push(`ecarroll@arcclaims.com`);
     }
 
-    if (discrimination === "yes")
-      newContacts.push("DISCRIMINATION SUPPORT GROUP");
+    if (discrimination === "yes") newCon.push("DISCRIMINATION SUPPORT GROUP");
 
-    setContacts([...newContacts]);
+    setContacts([...newCon]);
   };
 
   //* COPY CONTACTS
@@ -159,7 +156,7 @@ export default function LATAM() {
 
       <div className="bg-white w-full sm:max-w-3xl mt-24 mx-auto py-4 px-8 rounded-sm shadow-xl space-y-2">
         <h1 className="text-lg text-center font-extrabold text-gray-800 flex justify-between">
-          NA <span className="text-lg font-bold">(US / CA)</span>
+          NA <span className="text-lg font-bold">(MX / BR)</span>
         </h1>
 
         {/* //* SELECT COUNTRY */}
@@ -285,14 +282,11 @@ export default function LATAM() {
             <option className="font-medium" value="FLEX">
               Flex DP
             </option>
-            {country === "US" && (
-              <option className="font-medium" value="BICYCLE">
-                Bicycle DSP
+            {country === "MX" && (
+              <option className="font-medium" value="HUB DA">
+                Hub DA
               </option>
             )}
-            <option className="font-medium" value="HUB DA">
-              Hub DA
-            </option>
           </select>
         </div>
 
